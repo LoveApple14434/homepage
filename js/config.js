@@ -75,7 +75,7 @@ window.SITE_CONFIG = {
       title: "一些娱乐项目~",
       links: [
         { icon: "🥇", name: "火影忍者手游竞猜平台",   url: "https://loveapple.space/naruto" },
-        { icon: "https://loveapple.space/naruto/assets/naruto-icon-Dh5TswRy.jpeg", name: "五十音练习",   url: "https://loveapple.space/kana" },
+        { icon: "🌸", name: "五十音练习",   url: "https://loveapple.space/kana" },
         { icon: "🖼️", name: "随机图片 API",   url: "https://loveapple.space/img-api" },
       ],
     },
