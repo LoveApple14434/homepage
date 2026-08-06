@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="个人首页 - 个人简介与快捷跳转链接" />
+  <title>个人首页</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>" />
+</head>
+<body>
+  <!-- 樱花飘落画布 -->
+  <canvas id="sakura" aria-hidden="true"></canvas>
+
+  <!-- 顶部工具条：主题切换 -->
+  <div class="topbar">
+    <button id="theme-toggle" class="icon-btn" title="切换明暗模式" aria-label="切换明暗模式">
+      <span class="theme-icon">🌙</span>
+    </button>
+  </div>
+
+  <main class="container">
+    <!-- ===== 个人简介 ===== -->
+    <header class="hero">
+      <div class="avatar-wrap">
+        <img id="avatar" src="" alt="头像" />
+      </div>
+      <h1 class="name" id="name">...</h1>
+      <p class="tagline">
+        <span id="typed"></span><span class="cursor">|</span>
+      </p>
+      <p class="intro" id="intro"></p>
+      <div class="socials" id="socials"></div>
+    </header>
+
+    <!-- ===== 时钟 / 问候 / 搜索 ===== -->
+    <section class="panel clock-panel">
+      <div class="clock-time" id="clock">--:--:--</div>
+      <div class="clock-date" id="date">----年--月--日 星期-</div>
+      <div class="greeting" id="greeting"></div>
+      <div class="search">
+        <input id="search-input" type="text" placeholder="搜索博客文章..." autocomplete="off" spellcheck="false" />
+        <button id="search-btn" class="icon-btn" title="搜索" aria-label="搜索">🔍</button>
+        <div class="search-results" id="search-results" hidden></div>
+      </div>
+      <div class="search-tip">按 <kbd>/</kbd> 聚焦搜索 · <kbd>Enter</kbd> 打开第一条 · <kbd>Esc</kbd> 关闭</div>
+    </section>
+
+    <!-- ===== GitHub 贡献图 ===== -->
+    <section class="panel github-panel" id="github-panel" hidden>
+      <h2 class="group-title">📊 GitHub 贡献</h2>
+      <a id="github-link" href="https://github.com/" target="_blank" rel="noopener" title="查看 GitHub 主页">
+        <div class="gh-grid" id="github-chart"></div>
+        <div class="gh-footer">
+          <span id="gh-total"></span>
+          <span class="gh-legend">
+            <span>少</span>
+            <i class="gh-cell gh-lv0"></i>
+            <i class="gh-cell gh-lv1"></i>
+            <i class="gh-cell gh-lv2"></i>
+            <i class="gh-cell gh-lv3"></i>
+            <i class="gh-cell gh-lv4"></i>
+            <span>多</span>
+          </span>
+        </div>
+      </a>
+    </section>
+
+    <!-- ===== 快捷链接（由 config.js 渲染） ===== -->
+    <section class="groups" id="groups"></section>
+  </main>
+
+  <footer class="footer">
+    <p class="copyright" id="copyright"></p>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
