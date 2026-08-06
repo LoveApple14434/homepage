@@ -64,9 +64,9 @@ window.SITE_CONFIG = {
     {
         title: "分类查看博客",
         links: [
-            {name: "寄术", url: "https://loveapple.space/blog/categories/%E5%AF%84%E6%9C%AF/"},
-            {name: "牲活", url: "https://loveapple.space/blog/categories/%E7%89%B2%E6%B4%BB/"},
-            {name: "鱼论", url: "https://loveapple.space/blog/categories/%E9%B1%BC%E8%AE%BA/"},
+            {icon: "🧑‍💻", name: "寄术", url: "https://loveapple.space/blog/categories/%E5%AF%84%E6%9C%AF/"},
+            {icon: "🧳", name: "牲活", url: "https://loveapple.space/blog/categories/%E7%89%B2%E6%B4%BB/"},
+            {icon: "🧐", name: "鱼论", url: "https://loveapple.space/blog/categories/%E9%B1%BC%E8%AE%BA/"},
 
         ]
     },
