@@ -34,7 +34,27 @@
        </svg>`);
   };
   $("name").textContent = cfg.name;
-  $("intro").textContent = (cfg.intro || "");
+
+  /* -------- 关键词词云（简介） -------- */
+  const wc = $("wordcloud");
+  if (wc) {
+    const wcColors = [
+      "var(--primary-deep)", "var(--primary-dark)",
+      "var(--text)", "var(--primary-deep)", "var(--text-soft)",
+    ];
+    (cfg.keywords || []).forEach((k, i) => {
+      const span = document.createElement("span");
+      span.className = "wc-item";
+      const text = (k && typeof k === "object") ? k.text : k;
+      // 每次渲染随机权重（1~5），形成自然的词云层次
+      const weight = 1 + Math.floor(Math.random() * 5);
+      span.textContent = text;
+      span.style.fontSize = (0.85 + weight * 0.18) + "rem";
+      span.style.color = wcColors[i % wcColors.length];
+      span.style.animationDelay = (i * 0.04) + "s";
+      wc.appendChild(span);
+    });
+  }
 
   /* -------- 打字机标语 -------- */
   const typedEl = $("typed");

@@ -16,11 +16,13 @@ window.SITE_CONFIG = {
     "一条爱苹果的水煮鱼",
   ],
 
-  /* 简介文字（支持换行，用 \n） */
-  intro:
-    "大家好，我是「水煮鱼」LoveApple14434，南京大学电子科学与工程学院本科在读，方向为射频电路通信。" +
-    "曾任南京大学学生 IT 侠互助协会社长，热衷于用技术帮助同学解决电脑问题。" +
-    "业余喜欢折腾业余无线电、羽毛球、笔记本维修和 DIY 软路由与 NAS。",
+  /* ---------- 关键词词云（替代简介段落） ----------
+   * 每次刷新会随机分配字号大小，形成自然词云效果
+   * ------------------------------------------------ */
+  keywords: [
+    "射频电路", "南京大学", "业余无线电", "笔记本维修", "软路由", "NAS", "博客",
+    "IT侠", "GitHub", "羽毛球", "笔记本评测", "LOL", "QQ飞车手游", "日本語学习中"
+  ],
 
   /* ---------- 搜索 ---------- */
   /* LocalSearch：搜索博客文章，数据源为 Hexo 的 search.json（仅限该地址） */
@@ -66,8 +68,7 @@ window.SITE_CONFIG = {
         links: [
             {icon: "🧑‍💻", name: "寄术", url: "https://loveapple.space/blog/categories/%E5%AF%84%E6%9C%AF/"},
             {icon: "🧳", name: "牲活", url: "https://loveapple.space/blog/categories/%E7%89%B2%E6%B4%BB/"},
-            {icon: "🧐", name: "鱼论", url: "https://loveapple.space/blog/categories/%E9%B1%BC%E8%AE%BA/"},
-
+            {icon: "🧐", name: "鱼论", url: "https://loveapple.space/blog/categories/%E9%B1%BC%E8%AE%BA/"}
         ]
     },
     {
