@@ -59,6 +59,22 @@ window.SITE_CONFIG = {
     api: "https://github-contributions-api.jogruber.de/v4/",
   },
 
+  /* ---------- RSS / Atom 订阅 ----------
+   * 博客的订阅源，可复制到任意 RSS 阅读器订阅。
+   * 若你的 atom.xml / rss.xml 部署在域名根目录
+   * （即 https://loveapple.space/atom.xml 这种形式），
+   * 请把 url 中的 /blog/ 路径去掉。
+   * ------------------------------------------------ */
+  feeds: {
+    title: "订阅更新",
+    description: "欢迎通过 RSS / Atom 订阅博客，第一时间获取最新文章。",
+    tip: "把以下链接添加到任意 RSS 阅读器（如 Feedly、Inoreader、NetNewsWire 等）即可订阅。",
+    items: [
+      { icon: "📡", name: "RSS 订阅", note: "rss.xml", url: "https://loveapple.space/blog/rss.xml" },
+      { icon: "🛰️", name: "Atom 订阅", note: "atom.xml", url: "https://loveapple.space/blog/atom.xml" },
+    ],
+  },
+
   /* ---------- 快捷链接分组 ----------
    * icon 可以是 emoji 或任意文本；
    * 想要新增/修改链接，直接在此数组里增删即可。

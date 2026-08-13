@@ -463,6 +463,52 @@
       });
   })();
 
+  /* ==================== RSS / Atom 订阅 ==================== */
+  (function renderFeeds() {
+    const feeds = cfg.feeds;
+    const panel = $("feed-panel");
+    if (!feeds || !panel) return;
+
+    const items = feeds.items && feeds.items.length ? feeds.items : [];
+    if (!items.length) return;
+
+    $("feed-title").textContent = feeds.title || "订阅更新";
+    $("feed-desc").textContent = feeds.description || "";
+    $("feed-tip").textContent = feeds.tip || "";
+
+    const box = $("feed-links");
+    items.forEach((f) => {
+      const a = document.createElement("a");
+      a.className = "feed-card";
+      a.href = f.url;
+      a.target = "_blank";
+      a.rel = "noopener";
+
+      const icon = document.createElement("span");
+      icon.className = "feed-icon";
+      icon.textContent = f.icon || "📡";
+
+      const info = document.createElement("span");
+      info.className = "feed-info";
+
+      const name = document.createElement("span");
+      name.className = "feed-name";
+      name.textContent = f.name || "";
+
+      const note = document.createElement("span");
+      note.className = "feed-note";
+      note.textContent = f.note || "";
+
+      info.appendChild(name);
+      info.appendChild(note);
+      a.appendChild(icon);
+      a.appendChild(info);
+      box.appendChild(a);
+    });
+
+    panel.hidden = false;
+  })();
+
   /* ==================== 页脚 ==================== */
   $("copyright").textContent = window.COPYRIGHT_TEXT || "";
 

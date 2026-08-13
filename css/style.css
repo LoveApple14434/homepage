@@ -448,6 +448,90 @@ mark {
   display: inline-block;
 }
 
+/* ---------- RSS / Atom 订阅 ---------- */
+.feed-panel {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.feed-panel .group-title {
+  justify-content: center;
+}
+
+.feed-desc {
+  margin: 4px 0 18px;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.feed-links {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.feed-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid var(--card-border);
+  color: var(--text);
+  text-decoration: none;
+  min-width: 180px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    border-color 0.2s ease, background 0.3s ease;
+}
+
+[data-theme="dark"] .feed-card {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.feed-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary);
+  background: var(--primary);
+  box-shadow: var(--shadow-hover);
+}
+
+.feed-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.feed-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.feed-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.feed-note {
+  font-size: 0.78rem;
+  color: var(--text-soft);
+}
+
+.feed-card:hover .feed-name,
+.feed-card:hover .feed-note {
+  color: #fff;
+}
+
+.feed-tip {
+  margin-top: 18px;
+  color: var(--text-soft);
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
 /* ---------- 链接分组 ---------- */
 .groups {
   display: flex;
