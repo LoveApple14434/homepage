@@ -532,6 +532,37 @@ mark {
   line-height: 1.7;
 }
 
+/* ---------- 北洋园PT站个性条 ---------- */
+.pt-panel {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.pt-panel .group-title {
+  justify-content: center;
+}
+
+.pt-panel #pt-link {
+  display: block;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pt-panel #pt-link:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.pt-panel #pt-banner {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
 /* ---------- 链接分组 ---------- */
 .groups {
   display: flex;

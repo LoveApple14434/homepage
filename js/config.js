@@ -75,6 +75,17 @@ window.SITE_CONFIG = {
     ],
   },
 
+  /* ---------- 北洋园PT站个性条 ----------
+   * 展示推广横幅图片，点击跳转推广链接；
+   * 不需要时删除整个 pt 配置块即可隐藏该面板。
+   * ------------------------------------------------ */
+  pt: {
+    title: "🏴‍☠️ 北洋园PT站",
+    alt: "北洋园PT站",
+    image: "https://tjupt.org/mybar.php?userid=140396.png",
+    url: "https://tjupt.org/promotionlink.php?key=782d75eb353f43f7bb27fcc9677ecf11",
+  },
+
   /* ---------- 快捷链接分组 ----------
    * icon 可以是 emoji 或任意文本；
    * 想要新增/修改链接，直接在此数组里增删即可。

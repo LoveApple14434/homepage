@@ -509,6 +509,24 @@
     panel.hidden = false;
   })();
 
+  /* ==================== 北洋园PT站个性条 ==================== */
+  (function renderPT() {
+    const pt = cfg.pt;
+    const panel = $("pt-panel");
+    if (!pt || !panel || !pt.image) return;
+
+    const link = $("pt-link");
+    const img = $("pt-banner");
+    const title = $("pt-title");
+
+    if (pt.title) title.textContent = pt.title;
+    link.href = pt.url || "#";
+    img.src = pt.image;
+    img.alt = pt.alt || "北洋园PT站";
+    img.onerror = () => panel.remove(); // 图片加载失败则隐藏整块面板
+    panel.hidden = false;
+  })();
+
   /* ==================== 页脚 ==================== */
   $("copyright").textContent = window.COPYRIGHT_TEXT || "";
 
