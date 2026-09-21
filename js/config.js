@@ -111,8 +111,9 @@ window.SITE_CONFIG = {
       title: "记录 & 纪录",
       links: [
         { icon: "📻", name: "业余无线电·QSL", url: "https://loveapple.space/blog/QSL-LOG/" },
-        { icon: "💣", name: "个人扫雷纪录",      url: "https://loveapple.space/blog/mine-sweeper/" },
+        { icon: "💣", name: "个人扫雷纪录", url: "https://loveapple.space/blog/mine-sweeper/" },
         { icon: "🛜", name: "链接",  url: "https://loveapple.space/blog/link/" },
+        { icon: "⚡", name: "Human Benchmark", url: "https://humanbenchmark.com/users/5f5d9aeb41faff0001a03c5d"},
       ],
     },
   ],
