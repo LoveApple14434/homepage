@@ -686,11 +686,6 @@ mark {
   transition: color 0.2s ease;
 }
 
-.footer .record a:hover {
-  color: var(--primary-deep);
-  text-decoration: underline;
-}
-
 /* ---------- 动画 ---------- */
 @keyframes fadeUp {
   from {
