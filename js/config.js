@@ -114,6 +114,7 @@ window.SITE_CONFIG = {
         { icon: "💣", name: "个人扫雷纪录", url: "https://loveapple.space/blog/mine-sweeper/" },
         { icon: "🔗", name: "友情链接",  url: "https://loveapple.space/blog/link/" },
         { icon: "⚡", name: "Human Benchmark", url: "https://humanbenchmark.com/users/5f5d9aeb41faff0001a03c5d"},
+        { icon: "🀄", name: "雀魂麻将-牌谱屋", url: "https://amae-koromo.sapk.ch/player/24197592"},
         { icon: "🪐", name: "萌国度·异次元之旅", url: "https://travel.moe/go"},
       ],
     },
