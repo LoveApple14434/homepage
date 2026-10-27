@@ -90,6 +90,34 @@ window.SITE_CONFIG = {
    * icon 可以是 emoji 或任意文本；
    * 想要新增/修改链接，直接在此数组里增删即可。
    * ------------------------------------------------ */
+  /* ---------- 友情链接（P3 独立页） ----------
+   * 由博客友链页 https://loveapple.space/blog/link/ 同步而来。
+   * 想增删改，直接改下面数组即可。
+   * ------------------------------------------------ */
+  friends: [
+    {
+      class_name: "友達",
+      class_desc: "已启用随机顺序功能，排名不分先后~",
+      links: [
+        { name: "AritxOnly",            link: "https://www.aritxonly.top/",   avatar: "https://www.aritxonly.top/res/bio.png" },
+        { name: "YDJSIR",               link: "https://www.ydjsir.com.cn/",   avatar: "https://oss.ydjsir.com.cn/Avatar-r.png" },
+        { name: "翠翠idealclover",       link: "https://idealclover.top/",     avatar: "https://cdn.idealclover.cn/Projects/homepage/icon.png" },
+        { name: "little_sun",           link: "https://www.zcysky.com/",      avatar: "https://www.zcysky.com/images/avatar.png" },
+        { name: "wyaaaattwho",          link: "https://www.wyaaaattwho.xyz",  avatar: "" },
+        { name: "tukwhy",               link: "https://tukwhy.top",           avatar: "https://tukwhy.top/medias/avatar.jpg" },
+        { name: "茶栗栗屋",              link: "https://chariri.moe/",         avatar: "" },
+        { name: "LadderOperator",       link: "https://ladderoperator.top/",  avatar: "https://ladderoperator.top/img/avatar.jpg" },
+        { name: "锦木祁杰",              link: "https://qijieya.cn",           avatar: "https://imgoss.qijieya.cn/file/hutao.png" },
+        { name: "rivercloud",           link: "https://riverclouds.net/",     avatar: "https://s3.bmp.ovh/imgs/2024/02/10/02bd6754328be00d.jpg" },
+        { name: "Kzzzza",               link: "https://kzzzza.github.io/",    avatar: "https://kzzzza.github.io/img/tx.jpg" },
+        { name: "SoCoco",               link: "https://sococo.cn",            avatar: "https://cdn.jsdelivr.net/gh/SONGYU318/blog_img/images/Avatar.jpg" },
+        { name: "Haruka",               link: "https://haruka-hua.github.io/", avatar: "https://haruka-hua.github.io/images/avatar.jpg" },
+        { name: "孤筝の温暖小家",        link: "https://guzhengsvt.cn/",       avatar: "https://guzhengsvt.cn/avatar/avatar.webp" },
+        { name: "土豆的记事簿",          link: "https://20080618.xyz/",        avatar: "https://20080618.xyz/assets/uploads/a0fe7f5d-a4e6-4176-8cd3-97a2a808899c.webp" },
+      ],
+    },
+  ],
+
   groups: [
     {
       title: "记录 & 纪录",

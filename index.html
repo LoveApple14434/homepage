@@ -6,6 +6,7 @@
   <meta name="description" content="个人首页 - 个人简介与快捷跳转链接" />
   <title>个人首页</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/paged.css" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>" />
   <link rel="alternate" type="application/rss+xml" title="RSS 订阅" href="https://loveapple.space/blog/rss.xml" />
   <link rel="alternate" type="application/atom+xml" title="Atom 订阅" href="https://loveapple.space/blog/atom.xml" />
@@ -21,81 +22,118 @@
     </button>
   </div>
 
-  <main class="container">
-    <!-- ===== 个人简介 ===== -->
-    <header class="hero">
-      <div class="avatar-wrap">
-        <img id="avatar" src="" alt="头像" />
-      </div>
-      <h1 class="name" id="name">...</h1>
-      <p class="tagline">
-        <span id="typed"></span><span class="cursor">|</span>
-      </p>
-      <div class="wordcloud" id="wordcloud" aria-label="关键词"></div>
-      <div class="socials" id="socials"></div>
-    </header>
+  <!-- ==================== 分页容器 ==================== -->
+  <main class="container" id="pager">
 
-    <!-- ===== 时钟 / 问候 / 搜索 ===== -->
-    <section class="panel clock-panel">
-      <div class="clock-time" id="clock">--:--:--</div>
-      <div class="clock-date" id="date">----年--月--日 星期-</div>
-      <div class="greeting" id="greeting"></div>
-      <div class="search">
-        <input id="search-input" type="text" placeholder="搜索博客文章..." autocomplete="off" spellcheck="false" />
-        <button id="search-btn" class="icon-btn" title="搜索" aria-label="搜索">🔍</button>
-        <div class="search-results" id="search-results" hidden></div>
+    <!-- ---------- P1 个人简介 ---------- -->
+    <section class="page" data-title="简介">
+      <div class="page-inner">
+        <header class="hero">
+          <div class="avatar-wrap">
+            <img id="avatar" src="" alt="头像" />
+          </div>
+          <h1 class="name" id="name">...</h1>
+          <p class="tagline">
+            <span id="typed"></span><span class="cursor">|</span>
+          </p>
+          <div class="wordcloud" id="wordcloud" aria-label="关键词"></div>
+          <div class="socials" id="socials"></div>
+        </header>
       </div>
-      <div class="search-tip">按 <kbd>/</kbd> 聚焦搜索 · <kbd>Enter</kbd> 打开第一条 · <kbd>Esc</kbd> 关闭</div>
     </section>
 
-    <!-- ===== 北洋园PT站个性条 ===== -->
-    <section class="panel pt-panel" id="pt-panel" hidden>
-      <h2 class="group-title" id="pt-title"></h2>
-      <a id="pt-link" href="" target="_blank" rel="noopener">
-        <img id="pt-banner" src="" alt="北洋园PT站" />
-      </a>
+    <!-- ---------- P2 时钟与搜索 ---------- -->
+    <section class="page" data-title="时钟与搜索">
+      <div class="page-inner">
+        <section class="panel clock-panel">
+          <div class="clock-time" id="clock">--:--:--</div>
+          <div class="clock-date" id="date">----年--月--日 星期-</div>
+          <div class="greeting" id="greeting"></div>
+          <div class="search">
+            <input id="search-input" type="text" placeholder="搜索博客文章..." autocomplete="off" spellcheck="false" />
+            <button id="search-btn" class="icon-btn" title="搜索" aria-label="搜索">🔍</button>
+            <div class="search-results" id="search-results" hidden></div>
+          </div>
+          <div class="search-tip">按 <kbd>/</kbd> 聚焦搜索 · <kbd>Enter</kbd> 打开第一条 · <kbd>Esc</kbd> 关闭</div>
+        </section>
+      </div>
     </section>
 
-    <!-- ===== GitHub 贡献图 ===== -->
-    <section class="panel github-panel" id="github-panel" hidden>
-      <h2 class="group-title">📊 GitHub 贡献</h2>
-      <a id="github-link" href="https://github.com/" target="_blank" rel="noopener" title="查看 GitHub 主页">
-        <div class="gh-grid" id="github-chart"></div>
-        <div class="gh-footer">
-          <span id="gh-total"></span>
-          <span class="gh-legend">
-            <span>少</span>
-            <i class="gh-cell gh-lv0"></i>
-            <i class="gh-cell gh-lv1"></i>
-            <i class="gh-cell gh-lv2"></i>
-            <i class="gh-cell gh-lv3"></i>
-            <i class="gh-cell gh-lv4"></i>
-            <span>多</span>
-          </span>
+    <!-- ---------- P3 友達（气球自由漂浮） ---------- -->
+    <section class="page page--float" data-title="友達">
+      <div class="page-inner page-inner--float">
+        <h2 class="page-title">🎈 友達 <span class="sub">滚轮 / 方向键翻页</span></h2>
+        <div id="friends-body" class="float-field"></div>
+      </div>
+    </section>
+
+    <!-- ---------- P4 北洋园横幅 + GitHub 贡献 ---------- -->
+    <section class="page" data-title="PT 与贡献">
+      <div class="page-inner">
+        <div class="page-stack">
+          <section class="panel pt-panel" id="pt-panel" hidden>
+            <h2 class="group-title" id="pt-title"></h2>
+            <a id="pt-link" href="" target="_blank" rel="noopener">
+              <img id="pt-banner" src="" alt="北洋园PT站" />
+            </a>
+          </section>
+
+          <section class="panel github-panel" id="github-panel" hidden>
+            <h2 class="group-title">📊 GitHub 贡献</h2>
+            <a id="github-link" href="https://github.com/" target="_blank" rel="noopener" title="查看 GitHub 主页">
+              <div class="gh-grid" id="github-chart"></div>
+              <div class="gh-footer">
+                <span id="gh-total"></span>
+                <span class="gh-legend">
+                  <span>少</span>
+                  <i class="gh-cell gh-lv0"></i>
+                  <i class="gh-cell gh-lv1"></i>
+                  <i class="gh-cell gh-lv2"></i>
+                  <i class="gh-cell gh-lv3"></i>
+                  <i class="gh-cell gh-lv4"></i>
+                  <span>多</span>
+                </span>
+              </div>
+            </a>
+          </section>
         </div>
-      </a>
+      </div>
     </section>
 
-    <!-- ===== RSS / Atom 订阅 ===== -->
-    <section class="panel feed-panel" id="feed-panel" hidden>
-      <h2 class="group-title" id="feed-title">📡 订阅更新</h2>
-      <p class="feed-desc" id="feed-desc"></p>
-      <div class="feed-links" id="feed-links"></div>
-      <p class="feed-tip" id="feed-tip"></p>
+    <!-- ---------- P5 RSS / Atom 订阅 ---------- -->
+    <section class="page" data-title="订阅">
+      <div class="page-inner">
+        <section class="panel feed-panel" id="feed-panel" hidden>
+          <h2 class="group-title" id="feed-title">📡 订阅更新</h2>
+          <p class="feed-desc" id="feed-desc"></p>
+          <div class="feed-links" id="feed-links"></div>
+          <p class="feed-tip" id="feed-tip"></p>
+        </section>
+      </div>
     </section>
 
-    <!-- ===== 快捷链接（由 config.js 渲染） ===== -->
-    <section class="groups" id="groups"></section>
+    <!-- ---------- P6 快捷链接（余下的卡片） ---------- -->
+    <section class="page page--scroll" data-title="快捷链接">
+      <div class="page-inner">
+        <section class="groups" id="groups"></section>
+      </div>
+    </section>
+
   </main>
 
-  <footer class="footer">
+  <!-- 全局页脚：固定在各页底部 -->
+  <footer class="footer site-footer">
     <p class="copyright" id="copyright"></p>
     <p class="record">
       <a href="https://icp.gov.moe/?keyword=20269505" target="_blank">萌ICP备20269505号</a>
     </p>
   </footer>
 
+  <!-- 右侧圆点导航（由 js/paged.js 生成） -->
+  <nav class="pager-dots" id="pager-dots" aria-label="页面导航"></nav>
+
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/paged.js"></script>
 </body>
 </html>

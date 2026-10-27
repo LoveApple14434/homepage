@@ -1,0 +1,465 @@
+/* =========================================================
+ * Paged View —— 全屏分页布局（叠加在 style.css 之上）
+ * 只在 index.html 引入；不影响原有长页面样式
+ * ========================================================= */
+
+/* ---------- 页面级重置：让 #pager 承担滚动 ---------- */
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ---------- 分页滚动容器 ---------- */
+#pager {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: 100vh;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+#pager::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* ---------- 单个页面 ---------- */
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  /* 底部留出固定页脚的高度 */
+  padding: 56px 20px 76px;
+  box-sizing: border-box;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.page-inner {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* 内容超高的页面（P6 卡片）：容器内部滚动 */
+.page--scroll .page-inner {
+  max-height: calc(100vh - 132px);
+  max-height: calc(100dvh - 132px);
+  overflow-y: auto;
+  /* 不加 overscroll-behavior: contain —— 滚到底后能继续翻页 */
+  padding-right: 6px;
+  scrollbar-width: thin;
+}
+
+.page--scroll .page-inner::-webkit-scrollbar {
+  width: 6px;
+}
+
+.page--scroll .page-inner::-webkit-scrollbar-thumb {
+  background: var(--card-border, #e6c6cc);
+  border-radius: 3px;
+}
+
+/* 页内标题 */
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  flex: 0 0 auto;
+}
+
+.page-title .sub {
+  font-size: 0.8rem;
+  font-weight: 500;
+  opacity: 0.6;
+}
+
+/* P4：两个面板上下排 */
+.page-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* =========================================================
+ * P3 友達 —— 头像自由漂浮（无气球背景）
+ * 尺寸基准 --avb 由 JS 按画布短边算好写到 .float-field 上，
+ * 其余尺寸全部由它派生 → 整体随页面大小缩放
+ * ========================================================= */
+.page--float .page-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* 自由浮动画布 */
+.float-field {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  --avb: 54px; /* 兜底值，JS 会覆盖 */
+}
+
+/* 定位壳：只负责坐标，动画交给内层 */
+.balloon-slot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: block;
+}
+
+/* 位移层：指针驱散 / 陀螺仪视差都写在这里，与漂浮动画互不覆盖 */
+.balloon-offset {
+  display: block;
+  transform: translate3d(var(--ox, 0px), var(--oy, 0px), 0);
+  will-change: transform;
+}
+
+.balloon {
+  --tilt: 0deg;
+  --dur: 6s;
+  --delay: 0s;
+  --dx: 10px;
+  --dy: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--avb) * 0.07);
+  text-decoration: none;
+  color: var(--text);
+  animation: balloonDrift var(--dur) ease-in-out var(--delay) infinite;
+  will-change: transform;
+}
+
+.balloon:hover,
+.balloon:focus-visible {
+  animation-play-state: paused;
+  outline: none;
+}
+
+@keyframes balloonDrift {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(var(--tilt));
+  }
+  25% {
+    transform: translate(var(--dx), calc(var(--dy) * -1)) rotate(calc(var(--tilt) * -1));
+  }
+  50% {
+    transform: translate(0, calc(var(--dy) * -1.6)) rotate(var(--tilt));
+  }
+  75% {
+    transform: translate(calc(var(--dx) * -1), calc(var(--dy) * -0.5)) rotate(calc(var(--tilt) * -0.7));
+  }
+}
+
+/* 头像本体（唯一视觉元素，无圆底） */
+.balloon-avatar {
+  width: calc(var(--avb) * var(--avk, 1));
+  height: calc(var(--avb) * var(--avk, 1));
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.13);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.balloon:hover .balloon-avatar {
+  transform: scale(1.1);
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* 无头像时的首字母兜底 */
+.balloon-avatar--fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--avb) * 0.4);
+  font-weight: 700;
+  color: var(--primary);
+  background: rgba(255, 192, 203, 0.25);
+}
+
+/* 吊绳 */
+.balloon-string {
+  display: block;
+  width: 1px;
+  height: calc(var(--avb) * 0.14);
+  background: linear-gradient(to bottom, rgba(140, 140, 140, 0.6), rgba(140, 140, 140, 0.05));
+}
+
+/* 吊牌：id —— 不截断，长 id 完整显示 */
+.balloon-name {
+  padding: 1px calc(var(--avb) * 0.14);
+  border-radius: 999px;
+  font-size: max(0.62rem, calc(var(--avb) * 0.25));
+  line-height: 1.3;
+  text-align: center;
+  white-space: nowrap;
+  opacity: 0.85;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.balloon:hover .balloon-name {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* ---------- 右侧圆点导航 ---------- */
+.pager-dots {
+  position: fixed;
+  top: 50%;
+  right: 18px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  z-index: 30;
+}
+
+.pager-dot {
+  position: relative;
+  width: 11px;
+  height: 11px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--primary);
+  background: transparent;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pager-dot:hover {
+  transform: scale(1.3);
+}
+
+.pager-dot.active {
+  background: var(--primary);
+  transform: scale(1.35);
+}
+
+.pager-dot::after {
+  content: attr(data-label);
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 3px 9px;
+  border-radius: 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text);
+  font-size: 0.74rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.pager-dot:hover::after {
+  opacity: 1;
+}
+
+/* =========================================================
+ * 全局固定页脚（版权 + 备案）
+ * ========================================================= */
+.site-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 25;
+  margin: 0;
+  padding: 10px 16px calc(8px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 12px;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  text-align: center;
+  opacity: 0.66;
+  background: linear-gradient(to top, var(--bg, rgba(255, 255, 255, 0.92)) 42%, transparent);
+  pointer-events: none;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer a {
+  color: inherit;
+  text-decoration: none;
+  pointer-events: auto;
+  border-bottom: 1px dotted currentColor;
+}
+
+.site-footer a:hover {
+  opacity: 0.85;
+}
+
+.site-footer:hover {
+  opacity: 0.9;
+}
+
+/* 体感授权按钮（iOS 需要用户手势才能拿 sensor 权限） */
+.gyro-btn {
+  margin-left: auto;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 0.74rem;
+  line-height: 1.5;
+  cursor: pointer;
+  opacity: 0.9;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.gyro-btn:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.gyro-btn[hidden] {
+  display: none;
+}
+
+/* =========================================================
+ * GitHub 贡献图：窄屏不再溢出页面
+ * 原始格子固定 10px+1px 边距，53 周约 636px，手机必溢出
+ * ========================================================= */
+.github-panel,
+.github-panel #github-link,
+.github-panel .gh-grid {
+  max-width: 100%;
+}
+
+.github-panel .gh-grid {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  padding-bottom: 2px;
+}
+
+.github-panel .gh-col {
+  flex: 0 0 auto;
+}
+
+.github-panel .gh-grid::-webkit-scrollbar {
+  height: 4px;
+}
+
+.github-panel .gh-grid::-webkit-scrollbar-thumb {
+  background: var(--card-border, #e6c6cc);
+  border-radius: 2px;
+}
+
+/* ---------- 窄屏适配 ---------- */
+@media (max-width: 640px) {
+  .page {
+    padding: 48px 16px 84px;
+  }
+
+  /* 贡献图：格子缩小 + 靠左滚动，图例允许换行 */
+  .github-panel {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .github-panel .gh-grid {
+    justify-content: flex-start;
+  }
+
+  .github-panel .gh-cell {
+    width: 8px;
+    height: 8px;
+    margin: 1px;
+    border-radius: 1.5px;
+  }
+
+  .github-panel .gh-footer {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 10px;
+    font-size: 0.74rem;
+  }
+
+  .github-panel .gh-legend {
+    font-size: 0.7rem;
+  }
+
+  .page--scroll .page-inner {
+    max-height: calc(100vh - 140px);
+    max-height: calc(100dvh - 140px);
+  }
+
+  /* 圆点移到页脚上方，避免重叠 */
+  .pager-dots {
+    top: auto;
+    bottom: 42px;
+    right: 50%;
+    transform: translateX(50%);
+    flex-direction: row;
+    gap: 9px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(10px);
+  }
+
+  .pager-dot::after {
+    display: none;
+  }
+
+  .site-footer {
+    font-size: 0.68rem;
+    padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* ---------- 减少动效偏好 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  #pager {
+    scroll-behavior: auto;
+  }
+
+  .balloon {
+    animation: none;
+  }
+
+  .balloon-avatar,
+  .balloon-name,
+  .pager-dot {
+    transition: none;
+  }
+}
