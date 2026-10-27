@@ -196,8 +196,13 @@
 
     const g = state.gyro;
     if (g.live) {
-      g.cx += (g.tx - g.cx) * Math.min(1, 0.14 * dt);
-      g.cy += (g.ty - g.cy) * Math.min(1, 0.14 * dt);
+      /* 更重的低通，抑制传感器噪声 */
+      const a = Math.min(1, 0.1 * dt);
+      g.cx += (g.tx - g.cx) * a;
+      g.cy += (g.ty - g.cy) * a;
+      /* 逼近目标时直接吸附，干掉亚像素抖动 */
+      if (Math.abs(g.tx - g.cx) < 0.2) g.cx = g.tx;
+      if (Math.abs(g.ty - g.cy) < 0.2) g.cy = g.ty;
     }
 
     const base = state.base;
@@ -234,9 +239,19 @@
         it.oy = (it.oy / od) * MAXOFF;
       }
 
-      /* 陀螺仪视差：按 depth 分层 */
-      const gx = g.live ? g.cx * it.depth : 0;
-      const gy = g.live ? g.cy * it.depth : 0;
+      /* 陀螺仪视差：按 depth 分层，且幅度受"到边界的余量"限制
+         → 贴边元素不会撞到夹取边界，避免反复夹回造成的抽搐 */
+      const roomX = Math.max(0, Math.min(it.x0 - it.hx - SAFE_X, state.W - it.hx - SAFE_X - it.x0));
+      const roomY = Math.max(0, Math.min(it.y0 - it.hy - SAFE_Y, state.H - it.hy - SAFE_Y - it.y0));
+      const limX = roomX * 0.85;
+      const limY = roomY * 0.85;
+
+      let gx = 0;
+      let gy = 0;
+      if (g.live) {
+        gx = Math.max(-limX, Math.min(limX, g.cx * it.depth));
+        gy = Math.max(-limY, Math.min(limY, g.cy * it.depth));
+      }
 
       let fx = it.ox + gx;
       let fy = it.oy + gy;
@@ -279,7 +294,7 @@
         it.vy = 0;
       }
 
-      if (Math.abs(fx - it.lx) > 0.15 || Math.abs(fy - it.ly) > 0.15) {
+      if (Math.abs(fx - it.lx) > 0.25 || Math.abs(fy - it.ly) > 0.25) {
         it.el.style.setProperty("--ox", fx.toFixed(1) + "px");
         it.el.style.setProperty("--oy", fy.toFixed(1) + "px");
         it.lx = fx;
@@ -361,10 +376,16 @@
     }
     let db = (e.beta || 0) - g.baseB;
     let dg = (e.gamma || 0) - g.baseG;
+
+    /* 死区：±0.8° 内视为静止，滤掉手持微抖 */
+    const DEAD = 0.8;
+    if (Math.abs(db) < DEAD) db = 0;
+    if (Math.abs(dg) < DEAD) dg = 0;
+
     db = Math.max(-32, Math.min(32, db)) / 32;
     dg = Math.max(-32, Math.min(32, dg)) / 32;
 
-    const MAXP = state.base * 0.55;
+    const MAXP = state.base * 0.45;
     g.tx = dg * MAXP;
     g.ty = db * MAXP * 0.7;
     g.live = true;
