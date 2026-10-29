@@ -33,6 +33,16 @@ window.SITE_CONFIG = {
     base: "https://loveapple.space",                // 文章完整链接 = base + 文章 url
   },
 
+  /* ---------- Wordle ----------
+   * 只读公开成绩 JSON（Nginx 提供 CORS）；数据由油猴脚本同步，
+   * 前端不提供导入/导出，也不在本地保存成绩。
+   * refreshMinutes：页面可见时重新拉取成绩的间隔（分钟）。
+   * ------------------------------------------------ */
+  wordle: {
+    dataUrl: "https://loveapple.space/wordle-data/wordle.json",
+    refreshMinutes: 5,
+  },
+
   /* ---------- 社交链接 ---------- */
   socials: [
     { icon: "🎥", name: "Bilibili", url: "https://space.bilibili.com/190956075" },

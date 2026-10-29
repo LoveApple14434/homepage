@@ -9,7 +9,7 @@ description: 关于我
 
 {% raw %}
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
-  <img src="https://loveapple.icu/img/machinist.jpg" alt="头像" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-right: 20px;">
+  <img src="https://loveapple.space/blog/img/machinist.jpg" alt="头像" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-right: 20px;">
   <div>
     <h2 style="margin: 0;">LoveApple14434/水煮鱼</h2>
     <p style="margin: 5px 0 0; color: #666;">南京大学电子科学与工程学院 本科在读</p>

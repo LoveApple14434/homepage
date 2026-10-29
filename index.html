@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="个人首页 - 个人简介与快捷跳转链接" />
   <title>个人首页</title>
-  <link rel="stylesheet" href="css/style.css?v=20261027c" />
-  <link rel="stylesheet" href="css/paged.css?v=20261027c" />
+  <link rel="stylesheet" href="css/style.css?v=20261029c" />
+  <link rel="stylesheet" href="css/paged.css?v=20261029c" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>" />
   <link rel="alternate" type="application/rss+xml" title="RSS 订阅" href="https://loveapple.space/blog/rss.xml" />
   <link rel="alternate" type="application/atom+xml" title="Atom 订阅" href="https://loveapple.space/blog/atom.xml" />
@@ -55,6 +55,30 @@
             <div class="search-results" id="search-results" hidden></div>
           </div>
           <div class="search-tip">按 <kbd>/</kbd> 聚焦搜索 · <kbd>Enter</kbd> 打开第一条 · <kbd>Esc</kbd> 关闭</div>
+        </section>
+
+        <section class="panel wordle-panel" id="wordle-panel" aria-labelledby="wordle-title">
+          <div class="wordle-head">
+            <div class="wordle-heading">
+              <h2 class="group-title wordle-title" id="wordle-title">🟩 Wordle</h2>
+              <div class="wordle-sub">
+                <span class="wordle-puzzle" id="wordle-puzzle"></span>
+                <span id="wordle-meta"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="wordle-body" id="wordle-body" hidden>
+            <div class="wordle-score-wrap">
+              <div class="wordle-score" id="wordle-score">--</div>
+              <div class="wordle-streak" id="wordle-streak" hidden></div>
+            </div>
+            <div class="wordle-grid" id="wordle-grid" role="img" aria-label="Wordle 成绩方块"></div>
+          </div>
+
+          <div class="wordle-empty" id="wordle-empty">
+            正在加载成绩…
+          </div>
         </section>
       </div>
     </section>
@@ -132,8 +156,9 @@
   <!-- 右侧圆点导航（由 js/paged.js 生成） -->
   <nav class="pager-dots" id="pager-dots" aria-label="页面导航"></nav>
 
-  <script src="js/config.js?v=20261027c"></script>
-  <script src="js/main.js?v=20261027c"></script>
-  <script src="js/paged.js?v=20261027c"></script>
+  <script src="js/config.js?v=20261029c"></script>
+  <script src="js/main.js?v=20261029c"></script>
+  <script src="js/paged.js?v=20261029c"></script>
+  <script src="js/wordle.js?v=20261029c"></script>
 </body>
 </html>
