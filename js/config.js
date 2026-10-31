@@ -21,7 +21,7 @@ window.SITE_CONFIG = {
    * ------------------------------------------------ */
   keywords: [
     "射频电路", "南京大学", "业余无线电", "笔记本维修", "软路由", "NAS", "博客",
-    "IT侠", "GitHub", "羽毛球", "笔记本评测", "League of Legends", "QQ飞车手游-车神800分", "日本語学习中",
+    "IT侠", "GitHub", "羽毛球", "笔记本评测", "League of Legends", "QQ飞车手游-车神1000分", "日本語学习中",
     "扫雷爱好者", "嵌入式DIY爱好者", "雀魂麻将-雀杰"
   ],
 
@@ -78,7 +78,7 @@ window.SITE_CONFIG = {
   feeds: {
     title: "订阅更新",
     description: "欢迎通过 RSS / Atom 订阅博客，第一时间获取最新文章。",
-    tip: "把以下链接添加到任意 RSS 阅读器（如 Feedly、Inoreader、NetNewsWire 等）即可订阅。",
+    tip: "把以下链接添加到任意 RSS 阅读器即可订阅。",
     items: [
       { icon: "📡", name: "RSS 订阅", note: "rss.xml", url: "https://loveapple.space/blog/rss.xml" },
       { icon: "🛰️", name: "Atom 订阅", note: "atom.xml", url: "https://loveapple.space/blog/atom.xml" },
