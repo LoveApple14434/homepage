@@ -353,6 +353,102 @@ body {
 }
 
 /* =========================================================
+ * P6 业余无线电
+ * ========================================================= */
+.radio-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 26px 24px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.radio-hero {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 4px 0 22px;
+  text-align: center;
+}
+
+.radio-callsign {
+  font-size: clamp(2rem, 7vw, 3rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--primary);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  line-height: 1.1;
+}
+
+.radio-license {
+  font-size: 0.78rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  opacity: 0.85;
+  white-space: nowrap;
+}
+
+.radio-specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+  gap: 10px;
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.radio-spec {
+  padding: 9px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--card-border);
+  min-width: 0;
+}
+
+.radio-spec dt {
+  font-size: 0.72rem;
+  opacity: 0.6;
+  margin-bottom: 3px;
+}
+
+.radio-spec dd {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.radio-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.radio-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.radio-action:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  background: var(--primary);
+}
+
+/* =========================================================
  * GitHub 贡献图：窄屏不再溢出页面
  * 原始格子固定 10px+1px 边距，53 周约 636px，手机必溢出
  * ========================================================= */

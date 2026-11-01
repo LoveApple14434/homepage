@@ -504,6 +504,64 @@
     });
   }
 
+  /* ==================== P6 业余无线电 ==================== */
+  function renderRadio() {
+    const card = document.getElementById("radio-card");
+    const r = cfg.radio;
+    if (!card || !r) return;
+
+    const callsignEl = document.getElementById("radio-callsign");
+    const licenseEl = document.getElementById("radio-license");
+    if (callsignEl) callsignEl.textContent = r.callsign || "";
+    if (licenseEl) licenseEl.textContent = r.license || "";
+
+    const specs = document.getElementById("radio-specs");
+    if (specs) {
+      const rows = [
+        ["QTH", r.qth],
+        ["位置", r.qthDetail],
+        ["网格", r.grid],
+        ["CQ / ITU", [r.cq, r.itu].filter(Boolean).join(" / ")],
+        ["设备", (r.rigs || []).join(" · ")],
+        ["天线 / 功率", [r.antenna, r.power].filter(Boolean).join(" · ")]
+      ].filter(function (p) {
+        return p[1];
+      });
+
+      rows.forEach(function (p) {
+        const box = document.createElement("div");
+        box.className = "radio-spec";
+        const dt = document.createElement("dt");
+        dt.textContent = p[0];
+        const dd = document.createElement("dd");
+        dd.textContent = p[1];
+        box.appendChild(dt);
+        box.appendChild(dd);
+        specs.appendChild(box);
+      });
+    }
+
+    const actions = document.getElementById("radio-actions");
+    if (actions && Array.isArray(r.links)) {
+      r.links.forEach(function (l) {
+        const a = document.createElement("a");
+        a.className = "radio-action";
+        a.href = l.url;
+        a.target = "_blank";
+        a.rel = "noopener";
+        if (l.icon) {
+          const icon = document.createElement("span");
+          icon.textContent = l.icon;
+          a.appendChild(icon);
+        }
+        a.appendChild(document.createTextNode(l.label || l.url));
+        actions.appendChild(a);
+      });
+    }
+
+    card.hidden = false;
+  }
+
   /* ==================== 分页导航 ==================== */
   function initPager() {
     const pager = document.getElementById("pager");
@@ -603,5 +661,6 @@
   }
 
   renderFriends();
+  renderRadio();
   initPager();
 })();

@@ -128,6 +128,27 @@ window.SITE_CONFIG = {
     },
   ],
 
+  /* ---------- 业余无线电（P6 独立页） ----------
+   * 数据来源：https://loveapple.space/blog/QSL-LOG/
+   * ------------------------------------------------ */
+  radio: {
+    callsign: "BA4UHI",
+    license: "A 类操作证书",
+    qth: "南京大学仙林校区",
+    qthDetail: "中国 · 南京市栖霞区",
+    grid: "OM92lc",
+    cq: "24",
+    itu: "44",
+    antenna: "原装天线",
+    power: "1W / 5W",
+    rigs: ["宝锋 UV-5R", "泉盛 UV-K6"],
+    links: [
+      { icon: "📒", label: "QSL 记录", url: "https://loveapple.space/blog/QSL-LOG/" },
+      { icon: "✉️", label: "申请 QSL", url: "https://table.nju.edu.cn/dtable/forms/custom/BA4UHI-QSL/" },
+      { icon: "🌐", label: "QRZ",     url: "https://www.qrz.com/db/BA4UHI" },
+    ],
+  },
+
   groups: [
     {
       title: "记录 & 纪录",
