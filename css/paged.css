@@ -62,7 +62,7 @@ body {
   max-height: calc(100dvh - 132px);
   overflow-y: auto;
   /* 不加 overscroll-behavior: contain —— 滚到底后能继续翻页 */
-  padding-right: 6px;
+  /* 不加 padding-right：会挤掉 6px 宽度，导致窄屏下栅格少一列 */
   scrollbar-width: thin;
 }
 
@@ -394,7 +394,7 @@ body {
 
 .radio-specs {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 10px;
   margin: 0 0 20px;
   padding: 0;
