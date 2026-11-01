@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Wordle 成绩同步到 LoveApple 首页
 // @namespace    https://loveapple.space/
-// @version      1.0.0
-// @description  在 NYT Wordle 点击 Share 时，自动把本局成绩同步到 loveapple.space 首页
+// @version      1.1.0
+// @description  在 NYT Wordle 点击 Share 时（桌面剪贴板 / 移动端 Web Share），自动把本局成绩同步到 loveapple.space 首页
 // @author       LoveApple14434
 // @match        https://www.nytimes.com/games/wordle/*
 // @run-at       document-start
@@ -392,6 +392,99 @@
     }
   }
 
+  /* 移动端 Wordle 的 Share 走 Web Share API（navigator.share），不经过剪贴板 */
+  function hookShare() {
+    const w = pageWindow();
+    const nav = w && w.navigator;
+    if (!nav || typeof nav.share !== "function") return false;
+    if (nav.__wordleShareHooked) return true;
+
+    const original = nav.share;
+    const patched = function (data) {
+      try {
+        const text = data && (data.text || data.title);
+        if (SHARE_RE.test(String(text || ""))) {
+          handleShareText(text, false);
+        }
+      } catch (error) {
+        console.warn("[Wordle Sync] share hook", error);
+      }
+      return original.apply(this, arguments);
+    };
+
+    try {
+      Object.defineProperty(nav, "share", {
+        configurable: true,
+        writable: true,
+        value: patched
+      });
+    } catch (error) {
+      try {
+        nav.share = patched;
+      } catch (error2) {
+        return false;
+      }
+    }
+
+    nav.__wordleShareHooked = true;
+    return true;
+  }
+
+  /* 部分实现用 clipboard.write(ClipboardItem) 而不是 writeText */
+  function hookClipboardWrite() {
+    const w = pageWindow();
+    const clipboard = w && w.navigator && w.navigator.clipboard;
+    if (!clipboard || typeof clipboard.write !== "function") return false;
+    if (clipboard.__wordleWriteHooked) return true;
+
+    const original = clipboard.write;
+    const patched = function (items) {
+      try {
+        Array.prototype.forEach.call(items || [], function (item) {
+          if (!item || !item.types || item.types.indexOf("text/plain") < 0) return;
+          item
+            .getType("text/plain")
+            .then(function (blob) {
+              return blob.text ? blob.text() : new Response(blob).text();
+            })
+            .then(function (text) {
+              if (SHARE_RE.test(String(text || ""))) handleShareText(text, false);
+            })
+            .catch(function () {});
+        });
+      } catch (error) {
+        console.warn("[Wordle Sync] write hook", error);
+      }
+      return original.apply(this, arguments);
+    };
+
+    try {
+      Object.defineProperty(clipboard, "write", {
+        configurable: true,
+        writable: true,
+        value: patched
+      });
+    } catch (error) {
+      try {
+        clipboard.write = patched;
+      } catch (error2) {
+        return false;
+      }
+    }
+
+    clipboard.__wordleWriteHooked = true;
+    return true;
+  }
+
+  let allHookAttempts = 0;
+  function installHooks() {
+    const a = hookClipboard();
+    const b = hookClipboardWrite();
+    const c = hookShare();
+    if (a && b && c) return;
+    if (allHookAttempts++ < 40) setTimeout(installHooks, 250);
+  }
+
   function initMenu() {
     GM_registerMenuCommand("设置 Wordle 同步密码", function () {
       const password = getPassword(true);
@@ -405,6 +498,11 @@
         return;
       }
       handleShareText(text, true);
+    });
+
+    GM_registerMenuCommand("手动粘贴分享文本并同步", function () {
+      const text = prompt("粘贴 Wordle 分享文本（形如 Wordle 1,234 3/6）");
+      if (text) handleShareText(text, true);
     });
 
     GM_registerMenuCommand("清除 Wordle 同步密码", function () {
@@ -422,7 +520,7 @@
   }
 
   if (typeof document !== "undefined") {
-    installClipboardHook();
+    installHooks();
     initMenu();
   }
 })();
