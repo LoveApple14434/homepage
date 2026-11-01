@@ -56,8 +56,8 @@ body {
   margin: 0 auto;
 }
 
-/* 内容超高的页面（P6 卡片）：容器内部滚动 */
-.page--scroll .page-inner {
+/* 所有页面：内容超高时容器内部滚动 */
+.page .page-inner {
   max-height: calc(100vh - 132px);
   max-height: calc(100dvh - 132px);
   overflow-y: auto;
@@ -66,11 +66,11 @@ body {
   scrollbar-width: thin;
 }
 
-.page--scroll .page-inner::-webkit-scrollbar {
+.page .page-inner::-webkit-scrollbar {
   width: 6px;
 }
 
-.page--scroll .page-inner::-webkit-scrollbar-thumb {
+.page .page-inner::-webkit-scrollbar-thumb {
   background: var(--card-border, #e6c6cc);
   border-radius: 3px;
 }
@@ -513,7 +513,7 @@ body {
     font-size: 0.7rem;
   }
 
-  .page--scroll .page-inner {
+  .page .page-inner {
     max-height: calc(100vh - 140px);
     max-height: calc(100dvh - 140px);
   }
