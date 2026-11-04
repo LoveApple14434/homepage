@@ -145,15 +145,15 @@
 
     const rowDescription = result.grid.map(function (row) {
       return row.map(function (state) {
-        if (state === "correct") return "绿";
-        if (state === "present") return "黄";
-        return "灰";
+        if (state === "correct") return I18N.t("wordle.green");
+        if (state === "present") return I18N.t("wordle.yellow");
+        return I18N.t("wordle.gray");
       }).join("");
     }).join("；");
 
     els.grid.setAttribute(
       "aria-label",
-      "Wordle 第 " + result.puzzle.toLocaleString("en-US") + " 期，" +
+      I18N.t("wordle.puzzle", { n: result.puzzle.toLocaleString() }) + "，" +
         scoreLabel(result.score) + "，" + rowDescription
     );
   }
@@ -177,19 +177,19 @@
     const latest = results[0];
     if (!latest) {
       if (loadState === "error") {
-        renderEmpty("成绩加载失败，请稍后刷新。", true);
+        renderEmpty(I18N.t("wordle.error"), true);
       } else if (loadState === "loading") {
-        renderEmpty("正在加载成绩…", false);
+        renderEmpty(I18N.t("wordle.loading"), false);
       } else {
-        renderEmpty("还没有同步成绩。", false);
+        renderEmpty(I18N.t("wordle.empty"), false);
       }
       return;
     }
 
     const isToday = latest.date === todayString();
-    const dateText = latest.date + (isToday ? " · 今日" : "");
+    const dateText = latest.date + (isToday ? " · " + I18N.t("wordle.today") : "");
     const meta = [dateText, scoreLabel(latest.score)];
-    if (latest.hardMode) meta.push("困难模式");
+    if (latest.hardMode) meta.push(I18N.t("wordle.hard"));
 
     els.empty.hidden = true;
     els.empty.classList.remove("is-error");
@@ -202,7 +202,7 @@
     const streak = calcStreak(results);
     const showStreak = latest.score !== null && streak >= 2;
     els.streak.hidden = !showStreak;
-    els.streak.textContent = showStreak ? "连续 " + streak + " 天" : "";
+    els.streak.textContent = showStreak ? I18N.t("wordle.streak", { n: streak }) : "";
 
     renderGrid(latest);
   }

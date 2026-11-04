@@ -412,7 +412,7 @@
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "gyro-btn";
-    btn.textContent = "开启体感";
+    btn.textContent = I18N.t("gesture.enable");
 
     btn.addEventListener("click", function () {
       Promise.resolve(window.DeviceOrientationEvent.requestPermission())
@@ -421,11 +421,11 @@
             attachGyro();
             btn.hidden = true;
           } else {
-            btn.textContent = "体感被拒绝";
+            btn.textContent = I18N.t("gesture.denied");
           }
         })
         .catch(function () {
-          btn.textContent = "体感不可用";
+          btn.textContent = I18N.t("gesture.unavailable");
         });
     });
 
@@ -513,17 +513,17 @@
     const callsignEl = document.getElementById("radio-callsign");
     const licenseEl = document.getElementById("radio-license");
     if (callsignEl) callsignEl.textContent = r.callsign || "";
-    if (licenseEl) licenseEl.textContent = r.license || "";
+    if (licenseEl) licenseEl.textContent = I18N.tv(r.license) || "";
 
     const specs = document.getElementById("radio-specs");
     if (specs) {
       const rows = [
-        ["QTH", r.qth],
-        ["位置", r.qthDetail],
-        ["网格", r.grid],
-        ["CQ / ITU", [r.cq, r.itu].filter(Boolean).join(" / ")],
-        ["设备", (r.rigs || []).join(" · ")],
-        ["天线 / 功率", [r.antenna, r.power].filter(Boolean).join(" · ")]
+        [I18N.t("radio.qth"), I18N.tv(r.qth)],
+        [I18N.t("radio.pos"), I18N.tv(r.qthDetail)],
+        [I18N.t("radio.grid"), r.grid],
+        [I18N.t("radio.cqitu"), [r.cq, r.itu].filter(Boolean).join(" / ")],
+        [I18N.t("radio.rig"), (r.rigs || []).map(function (x) { return I18N.tv(x); }).join(" · ")],
+        [I18N.t("radio.antpwr"), [I18N.tv(r.antenna), r.power].filter(Boolean).join(" · ")]
       ].filter(function (p) {
         return p[1];
       });
@@ -554,13 +554,16 @@
           icon.textContent = l.icon;
           a.appendChild(icon);
         }
-        a.appendChild(document.createTextNode(l.label || l.url));
+        a.appendChild(document.createTextNode(I18N.tv(l.label) || l.url));
         actions.appendChild(a);
       });
     }
 
     card.hidden = false;
   }
+
+  /* 关闭浏览器自带的滚动位置恢复，避免刷新后与 hash 定位打架 */
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
   /* ==================== 分页导航 ==================== */
   function initPager() {
@@ -575,7 +578,7 @@
     const dots = [];
 
     pages.forEach(function (pg, i) {
-      const label = pg.getAttribute("data-title") || "第 " + (i + 1) + " 页";
+      const label = pg.getAttribute("data-title") || I18N.t("nav.indicator", { n: i + 1, total: pages.length });
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "pager-dot";
@@ -594,6 +597,18 @@
         behavior: reduceMotion ? "auto" : "smooth",
         block: "start"
       });
+    }
+
+    /* 瞬时定位：不受 CSS scroll-behavior: smooth 影响 */
+    function jumpTo(i) {
+      active = -1;
+      setActive(i);
+      const prev = pager.style.scrollBehavior;
+      pager.style.scrollBehavior = "auto";
+      const pagerTop = pager.getBoundingClientRect().top;
+      const delta = pages[i].getBoundingClientRect().top - pagerTop;
+      pager.scrollTop = pager.scrollTop + delta;
+      pager.style.scrollBehavior = prev;
     }
 
     function setActive(i) {
@@ -650,9 +665,9 @@
     if (m) {
       const idx = parseInt(m[1], 10) - 1;
       if (idx >= 0 && idx < pages.length) {
-        setActive(idx);
+        jumpTo(idx);
         requestAnimationFrame(function () {
-          pages[idx].scrollIntoView({ behavior: "auto", block: "start" });
+          jumpTo(idx);
         });
         return;
       }

@@ -1,43 +1,53 @@
 /* =========================================================
  * 站点配置 —— 修改这里的配置即可更新整个首页内容
  * 无需改动 index.html / main.js
+ *
+ * 文案字段支持三语：{ zh: "…", en: "…", ja: "…" }
+ * 渲染层用 I18N.tv(值) 取值；纯字符串原样返回。
  * ========================================================= */
 
 window.SITE_CONFIG = {
 
   /* ---------- 基本信息 ---------- */
-  name: "水煮鱼",                          // 显示名称
-  nickname: "LoveApple14434",              // 昵称 / 网名（显示在简介里）
-  avatar: "https://loveapple.space/blog/img/machinist.jpg", // 头像图片地址
+  name: { zh: "水煮鱼", en: "Boiled Fish", ja: "水煮魚" },
+  nickname: "LoveApple14434",
+  avatar: "https://loveapple.space/blog/img/machinist.jpg",
 
-  /* 打字机轮播的标语（会依次循环打字显示） */
+  /* 打字机轮播的标语 */
   taglines: [
     "LoveApple14434",
-    "一条爱苹果的水煮鱼",
+    { zh: "一条爱苹果的水煮鱼", en: "An apple-loving boiled fish", ja: "林檎好きの水煮魚" },
   ],
 
-  /* ---------- 关键词词云（替代简介段落） ----------
-   * 每次刷新会随机分配字号大小，形成自然词云效果
-   * ------------------------------------------------ */
+  /* ---------- 关键词词云 ---------- */
   keywords: [
-    "射频电路", "南京大学", "业余无线电", "笔记本维修", "软路由", "NAS", "博客",
-    "IT侠", "GitHub", "羽毛球", "笔记本评测", "League of Legends", "QQ飞车手游-车神1000分", "日本語学习中",
-    "扫雷爱好者", "嵌入式DIY爱好者", "雀魂麻将-雀杰"
+    { zh: "射频电路", en: "RF Circuits", ja: "RF回路" },
+    { zh: "南京大学", en: "Nanjing University", ja: "南京大学" },
+    { zh: "业余无线电", en: "Amateur Radio", ja: "アマチュア無線" },
+    { zh: "笔记本维修", en: "Laptop Repair", ja: "ノートPC修理" },
+    { zh: "软路由", en: "Router Hacking", ja: "ソフトルーター" },
+    "NAS",
+    { zh: "博客", en: "Blog", ja: "ブログ" },
+    { zh: "IT侠", en: "ITxia Volunteer", ja: "IT侠ボランティア" },
+    "GitHub",
+    { zh: "羽毛球", en: "Badminton", ja: "バドミントン" },
+    { zh: "笔记本评测", en: "Laptop Reviews", ja: "ノートPCレビュー" },
+    "League of Legends",
+    { zh: "QQ飞车手游-车神1000分", en: "QQ Speed - 1000 pts", ja: "QQ飛車-車神1000点" },
+    { zh: "日本語学习中", en: "Learning Japanese", ja: "日本語勉強中" },
+    { zh: "扫雷爱好者", en: "Minesweeper Fan", ja: "マインスイーパ好き" },
+    { zh: "嵌入式DIY爱好者", en: "Embedded DIY", ja: "組み込みDIY" },
+    { zh: "雀魂麻将-雀杰", en: "Mahjong Soul - Expert", ja: "雀魂-雀傑" }
   ],
 
   /* ---------- 搜索 ---------- */
-  /* LocalSearch：搜索博客文章，数据源为 Hexo 的 search.json（仅限该地址） */
   search: {
-    type: "localsearch",                            // 固定为 localsearch
-    api: "https://loveapple.space/blog/search.json", // 数据源地址
-    base: "https://loveapple.space",                // 文章完整链接 = base + 文章 url
+    type: "localsearch",
+    api: "https://loveapple.space/blog/search.json",
+    base: "https://loveapple.space",
   },
 
-  /* ---------- Wordle ----------
-   * 只读公开成绩 JSON（Nginx 提供 CORS）；数据由油猴脚本同步，
-   * 前端不提供导入/导出，也不在本地保存成绩。
-   * refreshMinutes：页面可见时重新拉取成绩的间隔（分钟）。
-   * ------------------------------------------------ */
+  /* ---------- Wordle ---------- */
   wordle: {
     dataUrl: "https://loveapple.space/wordle-data/wordle.json",
     refreshMinutes: 5,
@@ -47,67 +57,57 @@ window.SITE_CONFIG = {
   socials: [
     { icon: "🎥", name: "Bilibili", url: "https://space.bilibili.com/190956075" },
     { icon: "🐙", name: "GitHub",   url: "https://github.com/loveapple14434" },
-    { icon: "📧", name: "邮箱",      url: "mailto:harry.zy.su@qq.com" },
-    { icon: "🌐", name: "博客",      url: "https://loveapple.space/blog" },
+    { icon: "📧", name: { zh: "邮箱", en: "Email", ja: "メール" }, url: "mailto:harry.zy.su@qq.com" },
+    { icon: "🌐", name: { zh: "博客", en: "Blog", ja: "ブログ" }, url: "https://loveapple.space/blog" },
   ],
 
-  /* ---------- 站点图标（favicon） ----------
-   * 快捷链接卡片默认显示网站 favicon（Google 服务）；
-   * 可在此为特定域名指定固定图标，找不到时回退到站点 /favicon.ico。
-   * ------------------------------------------------ */
+  /* ---------- 站点图标 ---------- */
   favicons: {
     "loveapple.space": "https://loveapple.space/blog/img/machinist.jpg",
   },
 
-  /* ---------- GitHub 贡献图 ----------
-   * 在首页展示 GitHub 贡献热力图；
-   * 颜色随明暗主题自适应（见 style.css 中 --gh-level0~4 变量），
-   * api 为返回 JSON 的贡献数据接口（需支持 CORS）。
-   * ------------------------------------------------ */
+  /* ---------- GitHub 贡献图 ---------- */
   github: {
     username: "loveapple14434",
     api: "https://github-contributions-api.jogruber.de/v4/",
   },
 
-  /* ---------- RSS / Atom 订阅 ----------
-   * 博客的订阅源，可复制到任意 RSS 阅读器订阅。
-   * 若你的 atom.xml / rss.xml 部署在域名根目录
-   * （即 https://loveapple.space/atom.xml 这种形式），
-   * 请把 url 中的 /blog/ 路径去掉。
-   * ------------------------------------------------ */
+  /* ---------- RSS / Atom 订阅 ---------- */
   feeds: {
-    title: "订阅更新",
-    description: "欢迎通过 RSS / Atom 订阅博客，第一时间获取最新文章。",
-    tip: "把以下链接添加到任意 RSS 阅读器即可订阅。",
+    title: { zh: "订阅更新", en: "Feeds", ja: "購読" },
+    description: {
+      zh: "欢迎通过 RSS / Atom 订阅博客，第一时间获取最新文章。",
+      en: "Subscribe via RSS / Atom to get new posts as soon as they are published.",
+      ja: "RSS / Atom で購読すると、新しい記事をすぐ受け取れます。",
+    },
+    tip: {
+      zh: "把以下链接添加到任意 RSS 阅读器即可订阅。",
+      en: "Add either link to any RSS reader to subscribe.",
+      ja: "以下のリンクを任意の RSS リーダーに追加してください。",
+    },
     items: [
-      { icon: "📡", name: "RSS 订阅", note: "rss.xml", url: "https://loveapple.space/blog/rss.xml" },
-      { icon: "🛰️", name: "Atom 订阅", note: "atom.xml", url: "https://loveapple.space/blog/atom.xml" },
+      { icon: "📡", name: { zh: "RSS 订阅", en: "RSS", ja: "RSS" }, note: "rss.xml", url: "https://loveapple.space/blog/rss.xml" },
+      { icon: "🛰️", name: { zh: "Atom 订阅", en: "Atom", ja: "Atom" }, note: "atom.xml", url: "https://loveapple.space/blog/atom.xml" },
     ],
   },
 
-  /* ---------- 北洋园PT站个性条 ----------
-   * 展示推广横幅图片，点击跳转推广链接；
-   * 不需要时删除整个 pt 配置块即可隐藏该面板。
-   * ------------------------------------------------ */
+  /* ---------- 北洋园PT站个性条 ---------- */
   pt: {
-    title: "🏴‍☠️ 北洋园PT站",
-    alt: "北洋园PT站",
+    title: { zh: "🏴‍☠️ 北洋园PT站", en: "🏴‍☠️ Beiyangyuan PT", ja: "🏴‍☠️ 北洋園PT" },
+    alt: { zh: "北洋园PT站", en: "Beiyangyuan PT", ja: "北洋園PT" },
     image: "https://tjupt.org/mybar.php?userid=140396.png",
     url: "https://tjupt.org/promotionlink.php?key=782d75eb353f43f7bb27fcc9677ecf11",
   },
 
-  /* ---------- 快捷链接分组 ----------
-   * icon 可以是 emoji 或任意文本；
-   * 想要新增/修改链接，直接在此数组里增删即可。
-   * ------------------------------------------------ */
-  /* ---------- 友情链接（P3 独立页） ----------
-   * 由博客友链页 https://loveapple.space/blog/link/ 同步而来。
-   * 想增删改，直接改下面数组即可。
-   * ------------------------------------------------ */
+  /* ---------- 友情链接（P3 独立页） ---------- */
   friends: [
     {
-      class_name: "友達",
-      class_desc: "已启用随机顺序功能，排名不分先后~",
+      class_name: { zh: "友達", en: "Friends", ja: "友達" },
+      class_desc: {
+        zh: "已启用随机顺序功能，排名不分先后~",
+        en: "Random order enabled, no particular ranking~",
+        ja: "ランダム順で表示中、順位に意味はありません~",
+      },
       links: [
         { name: "AritxOnly",            link: "https://www.aritxonly.top/",   avatar: "https://www.aritxonly.top/res/bio.png" },
         { name: "YDJSIR",               link: "https://www.ydjsir.com.cn/",   avatar: "https://oss.ydjsir.com.cn/Avatar-r.png" },
@@ -128,53 +128,54 @@ window.SITE_CONFIG = {
     },
   ],
 
-  /* ---------- 业余无线电（P6 独立页） ----------
-   * 数据来源：https://loveapple.space/blog/QSL-LOG/
-   * ------------------------------------------------ */
+  /* ---------- 业余无线电（P6 独立页） ---------- */
   radio: {
     callsign: "BA4UHI",
-    license: "A 类操作证书",
-    qth: "南京大学仙林校区",
-    qthDetail: "中国 · 南京市栖霞区",
+    license: { zh: "B 类操作证书", en: "Class B License", ja: "B 類免許" },
+    qth: { zh: "南京大学仙林校区", en: "NJU Xianlin Campus", ja: "南京大学仙林キャンパス" },
+    qthDetail: { zh: "中国 · 南京市栖霞区", en: "Qixia, Nanjing, China", ja: "中国・南京市栖霞区" },
     grid: "OM92lc",
     cq: "24",
     itu: "44",
-    antenna: "原装天线",
+    antenna: { zh: "原装天线", en: "Stock antenna", ja: "付属アンテナ" },
     power: "1W / 5W",
-    rigs: ["宝锋 UV-5R", "泉盛 UV-K6"],
+    rigs: [
+      { zh: "宝锋 UV-5R", en: "Baofeng UV-5R", ja: "宝鋒 UV-5R" },
+      { zh: "泉盛 UV-K6", en: "Quansheng UV-K6", ja: "泉盛 UV-K6" },
+    ],
     links: [
-      { icon: "📒", label: "QSL 记录", url: "https://loveapple.space/blog/QSL-LOG/" },
-      { icon: "✉️", label: "申请 QSL", url: "https://table.nju.edu.cn/dtable/forms/custom/BA4UHI-QSL/" },
-      { icon: "🌐", label: "QRZ",     url: "https://www.qrz.com/db/BA4UHI" },
+      { icon: "📒", label: { zh: "QSL 记录", en: "QSL Log", ja: "QSL ログ" }, url: "https://loveapple.space/blog/QSL-LOG/" },
+      { icon: "✉️", label: { zh: "申请 QSL", en: "Request QSL", ja: "QSL 依頼" }, url: "https://table.nju.edu.cn/dtable/forms/custom/BA4UHI-QSL/" },
+      { icon: "🌐", label: "QRZ", url: "https://www.qrz.com/db/BA4UHI" },
     ],
   },
 
   groups: [
     {
-      title: "记录 & 纪录",
+      title: { zh: "记录 & 纪录", en: "Records", ja: "記録" },
       links: [
-        { icon: "🔗", name: "友情链接",  url: "https://loveapple.space/blog/link/" },
-        { icon: "📻", name: "业余无线电·QSL", url: "https://loveapple.space/blog/QSL-LOG/" },
-        { icon: "💣", name: "个人扫雷纪录", url: "https://loveapple.space/blog/mine-sweeper/" },
+        { icon: "🔗", name: { zh: "友情链接", en: "Friend Links", ja: "相互リンク" }, url: "https://loveapple.space/blog/link/" },
+        { icon: "📻", name: { zh: "业余无线电·QSL", en: "Radio · QSL", ja: "無線 · QSL" }, url: "https://loveapple.space/blog/QSL-LOG/" },
+        { icon: "💣", name: { zh: "个人扫雷纪录", en: "Minesweeper Records", ja: "マインスイーパ記録" }, url: "https://loveapple.space/blog/mine-sweeper/" },
         { icon: "⚡", name: "Human Benchmark", url: "https://humanbenchmark.com/users/5f5d9aeb41faff0001a03c5d"},
-        { icon: "🀄", name: "雀魂麻将-牌谱屋", url: "https://amae-koromo.sapk.ch/player/24197592"},
-        { icon: "🪐", name: "萌国度·异次元之旅", url: "https://travel.moe/go"},
+        { icon: "🀄", name: { zh: "雀魂麻将-牌谱屋", en: "Mahjong Soul Stats", ja: "雀魂 戦績" }, url: "https://amae-koromo.sapk.ch/player/24197592"},
+        { icon: "🪐", name: { zh: "萌国度·异次元之旅", en: "Moe · Another World", ja: "萌え · 異次元の旅" }, url: "https://travel.moe/go"},
       ],
     },
     {
-        title: "分类查看博客",
-        links: [
-            {icon: "🧑‍💻", name: "寄术", url: "https://loveapple.space/blog/categories/%E5%AF%84%E6%9C%AF/"},
-            {icon: "🧳", name: "牲活", url: "https://loveapple.space/blog/categories/%E7%89%B2%E6%B4%BB/"},
-            {icon: "🧐", name: "鱼论", url: "https://loveapple.space/blog/categories/%E9%B1%BC%E8%AE%BA/"}
-        ]
+      title: { zh: "分类查看博客", en: "Browse Blog by Category", ja: "カテゴリでブログを見る" },
+      links: [
+        { icon: "🧑‍💻", name: { zh: "寄术", en: "Tech", ja: "技術" }, url: "https://loveapple.space/blog/categories/%E5%AF%84%E6%9C%AF/" },
+        { icon: "🧳", name: { zh: "牲活", en: "Life", ja: "生活" }, url: "https://loveapple.space/blog/categories/%E7%89%B2%E6%B4%BB/" },
+        { icon: "🧐", name: { zh: "鱼论", en: "Rants", ja: "雑記" }, url: "https://loveapple.space/blog/categories/%E9%B1%BC%E8%AE%BA/" },
+      ],
     },
     {
-      title: "一些娱乐项目~",
+      title: { zh: "一些娱乐项目~", en: "For Fun", ja: "お楽しみ" },
       links: [
-        { icon: "🥇", name: "火影忍者手游竞猜平台",   url: "https://loveapple.space/naruto" },
-        { icon: "🌸", name: "五十音练习",   url: "https://loveapple.space/kana" },
-        { icon: "🖼️", name: "随机图片 API",   url: "https://loveapple.space/img-api" },
+        { icon: "🥇", name: { zh: "火影忍者手游竞猜平台", en: "Naruto Quiz", ja: "NARUTO 予想" }, url: "https://loveapple.space/naruto" },
+        { icon: "🌸", name: { zh: "五十音练习", en: "Kana Practice", ja: "五十音練習" }, url: "https://loveapple.space/kana" },
+        { icon: "🖼️", name: { zh: "随机图片 API", en: "Random Image API", ja: "ランダム画像 API" }, url: "https://loveapple.space/img-api" },
       ],
     },
   ],

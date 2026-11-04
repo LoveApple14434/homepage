@@ -33,7 +33,7 @@
          <text x='60' y='72' font-size='56' text-anchor='middle'>🌸</text>
        </svg>`);
   };
-  $("name").textContent = cfg.name;
+  $("name").textContent = I18N.tv(cfg.name);
 
   /* -------- 关键词词云（简介） -------- */
   const wc = $("wordcloud");
@@ -42,7 +42,8 @@
       "var(--primary-deep)", "var(--primary-dark)",
       "var(--text)", "var(--primary-deep)", "var(--text-soft)",
     ];
-    (cfg.keywords || []).forEach((k, i) => {
+    (cfg.keywords || []).forEach((_k, i) => {
+    const k = I18N.tv(_k);
       const span = document.createElement("span");
       span.className = "wc-item";
       const text = (k && typeof k === "object") ? k.text : k;
@@ -59,7 +60,7 @@
   /* -------- 打字机标语 -------- */
   const typedEl = $("typed");
   let tagIndex = 0, charIndex = 0, deleting = false;
-  const taglines = cfg.taglines && cfg.taglines.length ? cfg.taglines : [""];
+  const taglines = (cfg.taglines && cfg.taglines.length ? cfg.taglines : [""]).map((t) => I18N.tv(t));
 
   function typeTick() {
     const text = taglines[tagIndex];
@@ -93,12 +94,12 @@
     a.href = s.url;
     a.target = "_blank";
     a.rel = "noopener";
-    a.innerHTML = `<span>${s.icon || "🔗"}</span>${s.name || ""}`;
+    a.innerHTML = `<span>${s.icon || "🔗"}</span>${I18N.tv(s.name) || ""}`;
     socialsEl.appendChild(a);
   });
 
   /* ==================== 时钟 & 问候 ==================== */
-  const WEEK = ["日", "一", "二", "三", "四", "五", "六"];
+  const WEEK = [0,1,2,3,4,5,6].map((i) => I18N.t("clock.w." + i));
 
   function tickClock() {
     const now = new Date();
@@ -106,18 +107,18 @@
     $("clock").textContent =
       `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
     $("date").textContent =
-      `${now.getFullYear()}年${pad(now.getMonth() + 1)}月${pad(now.getDate())}日 星期${WEEK[now.getDay()]}`;
+      I18N.t("clock.date", { year: now.getFullYear(), month: pad(now.getMonth() + 1), day: pad(now.getDate()), w: WEEK[now.getDay()] });
     $("greeting").textContent = greetingOf(now.getHours());
   }
 
   function greetingOf(h) {
-    if (h < 5) return "夜深了，注意休息 🌙";
-    if (h < 9) return "早上好，新的一天 ☀️";
-    if (h < 12) return "上午好，元气满满 ✨";
-    if (h < 14) return "中午好，记得吃饭 🍚";
-    if (h < 18) return "下午好，继续加油 ⚡";
-    if (h < 22) return "晚上好，辛苦啦 🌆";
-    return "夜深了，早点休息 🌙";
+    if (h < 5) return I18N.t("clock.greet.late");
+    if (h < 9) return I18N.t("clock.greet.morning");
+    if (h < 12) return I18N.t("clock.greet.forenoon");
+    if (h < 14) return I18N.t("clock.greet.noon");
+    if (h < 18) return I18N.t("clock.greet.afternoon");
+    if (h < 22) return I18N.t("clock.greet.evening");
+    return I18N.t("clock.greet.night");
   }
   tickClock();
   setInterval(tickClock, 1000);
@@ -159,7 +160,7 @@
         .then((data) => {
           const list = Array.isArray(data) ? data : data.data || [];
           return list.map((item) => ({
-            title: String(item.title || "无标题"),
+            title: String(item.title || I18N.t("search.untitled")),
             url: ls.base + (item.url || ""),
             content: decodeEntities(String(item.content || "")),
             tags: item.tags || [],
@@ -206,12 +207,12 @@
     resultsBox.hidden = false;
     resultsBox.innerHTML = "";
     if (!items.length) {
-      resultsBox.innerHTML = `<div class="result-status">未找到与 “${escapeHtml(query)}” 相关的文章</div>`;
+      resultsBox.innerHTML = `<div class="result-status">${I18N.t("search.noResult", { q: escapeHtml(query) })}</div>`;
       return;
     }
     const meta = document.createElement("div");
     meta.className = "result-meta";
-    meta.textContent = `共找到 ${items.length} 篇相关文章`;
+    meta.textContent = I18N.t("search.resultCount", { n: items.length });
     resultsBox.appendChild(meta);
 
     const frag = document.createDocumentFragment();
@@ -238,7 +239,7 @@
 
   async function doSearch(q) {
     if (!q || !ls) return;
-    showStatus("正在加载搜索索引…");
+    showStatus(I18N.t("search.loading"));
     try {
       const index = await loadIndex();
       if (q !== searchInput.value.trim()) return; // 输入已变化，丢弃过期结果
@@ -251,7 +252,7 @@
       renderResults(items, q);
     } catch (err) {
       if (q !== searchInput.value.trim()) return;
-      showStatus(`⚠️ 搜索数据加载失败：${escapeHtml(err.message)}`);
+      showStatus(I18N.t("search.loadFailed", { msg: escapeHtml(err.message) }));
     }
   }
 
@@ -324,7 +325,7 @@
 
     const title = document.createElement("h2");
     title.className = "group-title";
-    title.textContent = group.title;
+    title.textContent = I18N.tv(group.title);
     sec.appendChild(title);
 
     const links = document.createElement("div");
@@ -378,7 +379,7 @@
 
       const nameSpan = document.createElement("span");
       nameSpan.className = "name";
-      nameSpan.textContent = l.name || "";
+      nameSpan.textContent = I18N.tv(l.name) || "";
       a.appendChild(nameSpan);
 
       links.appendChild(a);
@@ -441,13 +442,13 @@
           d.className = "gh-cell" + (c ? " gh-lv" + Math.min(c.level || 0, 4) : " gh-lv0");
           d.style.width = cellSz + "px";
           d.style.height = cellSz + "px";
-          if (c) d.title = c.date + " · " + c.count + " 次提交";
+          if (c) d.title = c.date + " · " + I18N.t("github.commits", { n: c.count });
           col.appendChild(d);
         });
         grid.appendChild(col);
       });
 
-      if (totalEl) totalEl.textContent = "近一年共 " + total + " 次提交";
+      if (totalEl) totalEl.textContent = I18N.t("github.year", { n: total });
     }
 
     panel.hidden = false;
@@ -455,11 +456,11 @@
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
       .then((data) => {
         const list = data.contributions || [];
-        if (!list.length) throw new Error("数据为空");
+        if (!list.length) throw new Error(I18N.t("github.empty"));
         render(buildWeeks(list), data.total && data.total.lastYear);
       })
       .catch((err) => {
-        grid.innerHTML = `<div class="gh-error">贡献数据加载失败：${escapeHtml(err.message)}</div>`;
+        grid.innerHTML = `<div class="gh-error">${I18N.t("github.loadFailed", { msg: escapeHtml(err.message) })}</div>`;
       });
   })();
 
@@ -472,9 +473,9 @@
     const items = feeds.items && feeds.items.length ? feeds.items : [];
     if (!items.length) return;
 
-    $("feed-title").textContent = feeds.title || "订阅更新";
-    $("feed-desc").textContent = feeds.description || "";
-    $("feed-tip").textContent = feeds.tip || "";
+    $("feed-title").textContent = I18N.tv(feeds.title) || I18N.t("feeds.title");
+    $("feed-desc").textContent = I18N.tv(feeds.description) || "";
+    $("feed-tip").textContent = I18N.tv(feeds.tip) || "";
 
     const box = $("feed-links");
     items.forEach((f) => {
@@ -493,7 +494,7 @@
 
       const name = document.createElement("span");
       name.className = "feed-name";
-      name.textContent = f.name || "";
+      name.textContent = I18N.tv(f.name) || "";
 
       const note = document.createElement("span");
       note.className = "feed-note";
@@ -519,10 +520,10 @@
     const img = $("pt-banner");
     const title = $("pt-title");
 
-    if (pt.title) title.textContent = pt.title;
+    if (pt.title) title.textContent = I18N.tv(pt.title);
     link.href = pt.url || "#";
     img.src = pt.image;
-    img.alt = pt.alt || "北洋园PT站";
+    img.alt = I18N.tv(pt.alt) || I18N.t("pt.site");
     img.onerror = () => panel.remove(); // 图片加载失败则隐藏整块面板
     panel.hidden = false;
   })();
