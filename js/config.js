@@ -144,7 +144,7 @@ window.SITE_CONFIG = {
       { zh: "泉盛 UV-K6", en: "Quansheng UV-K6", ja: "泉盛 UV-K6" },
     ],
     links: [
-      { icon: "📒", label: { zh: "QSL 记录", en: "QSL Log", ja: "QSL ログ" }, url: "https://loveapple.space/blog/QSL-LOG/" },
+      { icon: "📒", label: { zh: "QSL 记录", en: "QSL Log", ja: "QSL ログ" }, url: "https://loveapple.space/ba4uhi/" },
       { icon: "✉️", label: { zh: "申请 QSL", en: "Request QSL", ja: "QSL 依頼" }, url: "https://table.nju.edu.cn/dtable/forms/custom/BA4UHI-QSL/" },
       { icon: "🌐", label: "QRZ", url: "https://www.qrz.com/db/BA4UHI" },
     ],
@@ -155,7 +155,7 @@ window.SITE_CONFIG = {
       title: { zh: "记录 & 纪录", en: "Records", ja: "記録" },
       links: [
         { icon: "🔗", name: { zh: "友情链接", en: "Friend Links", ja: "相互リンク" }, url: "https://loveapple.space/blog/link/" },
-        { icon: "📻", name: { zh: "业余无线电·QSL", en: "Radio · QSL", ja: "無線 · QSL" }, url: "https://loveapple.space/blog/QSL-LOG/" },
+        { icon: "📻", name: { zh: "业余无线电·QSL", en: "Radio · QSL", ja: "無線 · QSL" }, url: "https://loveapple.space/ba4uhi/" },
         { icon: "💣", name: { zh: "个人扫雷纪录", en: "Minesweeper Records", ja: "マインスイーパ記録" }, url: "https://loveapple.space/blog/mine-sweeper/" },
         { icon: "⚡", name: "Human Benchmark", url: "https://humanbenchmark.com/users/5f5d9aeb41faff0001a03c5d"},
         { icon: "🀄", name: { zh: "雀魂麻将-牌谱屋", en: "Mahjong Soul Stats", ja: "雀魂 戦績" }, url: "https://amae-koromo.sapk.ch/player/24197592"},
