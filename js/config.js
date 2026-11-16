@@ -143,6 +143,13 @@ window.SITE_CONFIG = {
       { zh: "宝锋 UV-5R", en: "Baofeng UV-5R", ja: "宝鋒 UV-5R" },
       { zh: "泉盛 UV-K6", en: "Quansheng UV-K6", ja: "泉盛 UV-K6" },
     ],
+    /* QSL 通联数据：优先取 JSON，失败回退解析 data.js */
+    qsl: {
+      dataJson: "https://loveapple.space/ba4uhi/assets/data.json",
+      dataJs: "https://loveapple.space/ba4uhi/assets/data.js",
+      recent: 6,
+      refreshMinutes: 10,
+    },
     links: [
       { icon: "📒", label: { zh: "QSL 记录", en: "QSL Log", ja: "QSL ログ" }, url: "https://loveapple.space/ba4uhi/" },
       { icon: "✉️", label: { zh: "申请 QSL", en: "Request QSL", ja: "QSL 依頼" }, url: "https://table.nju.edu.cn/dtable/forms/custom/BA4UHI-QSL/" },

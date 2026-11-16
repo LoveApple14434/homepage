@@ -128,5 +128,17 @@ window.__I18N__["ja"]={translation:{
     "enable": "モーションを有効化",
     "denied": "モーション許可が拒否されました",
     "unavailable": "モーション利用不可"
+  },
+  "qsl": {
+    "title": "最近の交信",
+    "viewAll": "すべて見る",
+    "loading": "交信データを読み込み中…",
+    "error": "交信データの読み込みに失敗",
+    "empty": "交信記録はまだありません",
+    "total": "交信数",
+    "callsigns": "コールサイン数",
+    "band": "バンド",
+    "mode": "モード",
+    "updated": "更新"
   }
 }};

@@ -449,6 +449,123 @@ body {
 }
 
 /* =========================================================
+ * P6 QSL 通联数据
+ * ========================================================= */
+.qsl-panel {
+  margin-top: 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 20px 22px 16px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.qsl-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.qsl-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.qsl-more {
+  font-size: 0.78rem;
+  color: var(--primary);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.qsl-more:hover {
+  border-bottom-color: currentColor;
+}
+
+.qsl-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 0;
+}
+
+.qsl-stat {
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  min-width: 0;
+}
+
+.qsl-stat dt {
+  font-size: 0.68rem;
+  opacity: 0.6;
+  margin-bottom: 2px;
+}
+
+.qsl-stat dd {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.qsl-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.qsl-item {
+  padding: 9px 0;
+  border-top: 1px dashed var(--card-border);
+}
+
+.qsl-item:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.qsl-item-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.qsl-call {
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0.02em;
+}
+
+.qsl-when {
+  font-size: 0.72rem;
+  opacity: 0.62;
+  white-space: nowrap;
+}
+
+.qsl-item-meta {
+  font-size: 0.74rem;
+  opacity: 0.72;
+  margin-top: 2px;
+  word-break: break-word;
+}
+
+.qsl-status {
+  font-size: 0.72rem;
+  opacity: 0.55;
+  margin-top: 8px;
+}
+
+/* =========================================================
  * GitHub 贡献图：窄屏不再溢出页面
  * 原始格子固定 10px+1px 边距，53 周约 636px，手机必溢出
  * ========================================================= */

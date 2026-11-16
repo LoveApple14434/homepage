@@ -128,5 +128,17 @@ window.__I18N__["zh-CN"]={translation:{
     "enable": "开启体感",
     "denied": "体感被拒绝",
     "unavailable": "体感不可用"
+  },
+  "qsl": {
+    "title": "最近通联",
+    "viewAll": "查看全部",
+    "loading": "加载通联数据…",
+    "error": "通联数据加载失败",
+    "empty": "暂无通联记录",
+    "total": "通联总数",
+    "callsigns": "呼号数",
+    "band": "频段",
+    "mode": "模式",
+    "updated": "更新于"
   }
 }};

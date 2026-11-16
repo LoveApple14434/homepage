@@ -565,6 +565,103 @@
   /* 关闭浏览器自带的滚动位置恢复，避免刷新后与 hash 定位打架 */
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
+  /* ==================== P6 QSL 通联数据 ==================== */
+  function parseHamData(text) {
+    const m = text.match(/window\.HAM_DATA\s*=\s*/);
+    const raw = m ? text.slice(m.index + m[0].length) : text;
+    return JSON.parse(raw.replace(/;\s*$/, ""));
+  }
+
+  function renderQsl() {
+    const panel = document.getElementById("qsl-panel");
+    const statsEl = document.getElementById("qsl-stats");
+    const listEl = document.getElementById("qsl-list");
+    const statusEl = document.getElementById("qsl-status");
+    const qsl = cfg.radio && cfg.radio.qsl;
+    if (!panel || !statsEl || !listEl || !qsl) return;
+
+    const urls = [qsl.dataJson, qsl.dataJs].filter(Boolean);
+
+    function paint(data) {
+      const records = (data.records || []).slice().sort(function (a, b) {
+        return (b.date + " " + b.time).localeCompare(a.date + " " + a.time);
+      });
+      const st = data.sourceStats || {};
+      const meta = data.meta || {};
+      const uniq = st.unique_callsigns || new Set(records.map(function (r) { return r.callsign; })).size;
+
+      const rows = [
+        [I18N.t("qsl.total"), String(st.total_qsos || records.length)],
+        [I18N.t("qsl.callsigns"), String(uniq)],
+        [I18N.t("qsl.band"), (meta.bands || []).join(" / ") || "-"],
+        [I18N.t("qsl.mode"), (meta.modes || []).join(" / ") || "-"]
+      ];
+
+      statsEl.innerHTML = "";
+      rows.forEach(function (row) {
+        const box = document.createElement("div");
+        box.className = "qsl-stat";
+        const dt = document.createElement("dt");
+        dt.textContent = row[0];
+        const dd = document.createElement("dd");
+        dd.textContent = row[1];
+        box.appendChild(dt);
+        box.appendChild(dd);
+        statsEl.appendChild(box);
+      });
+
+      listEl.innerHTML = "";
+      records.slice(0, qsl.recent || 6).forEach(function (r) {
+        const li = document.createElement("li");
+        li.className = "qsl-item";
+
+        const head = document.createElement("div");
+        head.className = "qsl-item-head";
+        const call = document.createElement("span");
+        call.className = "qsl-call";
+        call.textContent = r.callsign || "-";
+        const when = document.createElement("span");
+        when.className = "qsl-when";
+        when.textContent = [r.date, r.time].filter(Boolean).join(" ");
+        head.appendChild(call);
+        head.appendChild(when);
+
+        const sub = document.createElement("div");
+        sub.className = "qsl-item-meta";
+        sub.textContent = [
+          r.freq_rx ? r.freq_rx + " MHz" : "",
+          r.mode,
+          r.qth
+        ].filter(Boolean).join(" · ");
+
+        li.appendChild(head);
+        li.appendChild(sub);
+        listEl.appendChild(li);
+      });
+
+      if (statusEl) statusEl.textContent = I18N.t("qsl.updated") + " " + (st.last_updated || "").replace("T", " ").slice(0, 16);
+      if (!records.length && statusEl) statusEl.textContent = I18N.t("qsl.empty");
+      panel.hidden = false;
+    }
+
+    function load(i) {
+      if (i >= urls.length) {
+        if (statusEl) statusEl.textContent = I18N.t("qsl.error");
+        panel.hidden = false;
+        return;
+      }
+      fetch(urls[i], { cache: "no-store" })
+        .then(function (r) {
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          return r.text();
+        })
+        .then(function (text) { paint(parseHamData(text)); })
+        .catch(function () { load(i + 1); });
+    }
+
+    load(0);
+  }
+
   /* ==================== 分页导航 ==================== */
   function initPager() {
     const pager = document.getElementById("pager");
@@ -677,5 +774,6 @@
 
   renderFriends();
   renderRadio();
+  renderQsl();
   initPager();
 })();

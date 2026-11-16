@@ -128,5 +128,17 @@ window.__I18N__["en"]={translation:{
     "enable": "Enable motion",
     "denied": "Motion permission denied",
     "unavailable": "Motion unavailable"
+  },
+  "qsl": {
+    "title": "Recent QSOs",
+    "viewAll": "View all",
+    "loading": "Loading QSO data…",
+    "error": "Failed to load QSO data",
+    "empty": "No QSO records yet",
+    "total": "Total QSOs",
+    "callsigns": "Callsigns",
+    "band": "Band",
+    "mode": "Mode",
+    "updated": "Updated"
   }
 }};
