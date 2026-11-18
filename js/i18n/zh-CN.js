@@ -98,7 +98,9 @@ window.__I18N__["zh-CN"]={translation:{
     "cqitu": "CQ / ITU",
     "rig": "设备",
     "antpwr": "天线 / 功率",
-    "license": "B 类操作证书"
+    "license": "B 类操作证书",
+    "ant": "天线",
+    "pwr": "功率"
   },
   "feeds": {
     "title": "📡 订阅更新",

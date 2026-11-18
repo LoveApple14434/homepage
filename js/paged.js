@@ -523,7 +523,8 @@
         [I18N.t("radio.grid"), r.grid],
         [I18N.t("radio.cqitu"), [r.cq, r.itu].filter(Boolean).join(" / ")],
         [I18N.t("radio.rig"), (r.rigs || []).map(function (x) { return I18N.tv(x); }).join(" · ")],
-        [I18N.t("radio.antpwr"), [I18N.tv(r.antenna), r.power].filter(Boolean).join(" · ")]
+        [I18N.t("radio.ant"), [].concat(r.antenna || []).map(function (x) { return I18N.tv(x); }).join(" · ")],
+        [I18N.t("radio.pwr"), r.power]
       ].filter(function (p) {
         return p[1];
       });

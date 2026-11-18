@@ -137,11 +137,16 @@ window.SITE_CONFIG = {
     grid: "OM92lc",
     cq: "24",
     itu: "44",
-    antenna: { zh: "原装天线", en: "Stock antenna", ja: "付属アンテナ" },
+    antenna: [
+      { zh: "原装天线", en: "Stock antenna", ja: "付属アンテナ" },
+      { zh: "短波端馈天线", en: "HF end-fed wire", ja: "HF エンドフェッド" },
+      { zh: "短波 GP 天线", en: "HF ground plane", ja: "HF GP" },
+    ],
     power: "1W / 5W",
     rigs: [
       { zh: "宝锋 UV-5R", en: "Baofeng UV-5R", ja: "宝鋒 UV-5R" },
       { zh: "泉盛 UV-K6", en: "Quansheng UV-K6", ja: "泉盛 UV-K6" },
+      { zh: "八重洲 FT-891", en: "Yaesu FT-891", ja: "八重洲 FT-891" },
     ],
     /* QSL 通联数据：优先取 JSON，失败回退解析 data.js */
     qsl: {

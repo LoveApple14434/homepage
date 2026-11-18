@@ -98,7 +98,9 @@ window.__I18N__["ja"]={translation:{
     "cqitu": "CQ / ITU",
     "rig": "リグ",
     "antpwr": "アンテナ / 出力",
-    "license": "B 類免許"
+    "license": "B 類免許",
+    "ant": "アンテナ",
+    "pwr": "出力"
   },
   "feeds": {
     "title": "📡 購読",

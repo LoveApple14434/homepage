@@ -98,7 +98,9 @@ window.__I18N__["en"]={translation:{
     "cqitu": "CQ / ITU",
     "rig": "Rigs",
     "antpwr": "Antenna / Power",
-    "license": "Class B License"
+    "license": "Class B License",
+    "ant": "Antenna",
+    "pwr": "Power"
   },
   "feeds": {
     "title": "📡 Feeds",
