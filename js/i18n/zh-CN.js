@@ -84,7 +84,10 @@ window.__I18N__["zh-CN"]={translation:{
     "today": "今日",
     "green": "绿",
     "yellow": "黄",
-    "gray": "灰"
+    "gray": "灰",
+    "history": "历史成绩",
+    "lost": "成绩遗失",
+    "noRecord": "无记录"
   },
   "friends": {
     "title": "🎈 友達",

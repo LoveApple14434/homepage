@@ -84,7 +84,10 @@ window.__I18N__["ja"]={translation:{
     "today": "今日",
     "green": "正解",
     "yellow": "位置違い",
-    "gray": "不正解"
+    "gray": "不正解",
+    "history": "成績履歴",
+    "lost": "記録紛失",
+    "noRecord": "記録なし"
   },
   "friends": {
     "title": "🎈 友達",

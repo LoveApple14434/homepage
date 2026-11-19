@@ -84,7 +84,10 @@ window.__I18N__["en"]={translation:{
     "today": "Today",
     "green": "correct",
     "yellow": "present",
-    "gray": "absent"
+    "gray": "absent",
+    "history": "Score history",
+    "lost": "Score lost",
+    "noRecord": "No record"
   },
   "friends": {
     "title": "🎈 Friends",
