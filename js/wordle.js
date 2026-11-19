@@ -121,9 +121,12 @@
   function getConfig() {
     const raw = (typeof window !== "undefined" && window.SITE_CONFIG && window.SITE_CONFIG.wordle) || {};
     const minutes = Number(raw.refreshMinutes);
+    const ov = raw.streakOverride;
+    const ovDays = ov && Number.isFinite(Number(ov.days)) ? Number(ov.days) : null;
     return {
       dataUrl: typeof raw.dataUrl === "string" && raw.dataUrl ? raw.dataUrl : DEFAULT_DATA_URL,
-      refreshMinutes: Number.isFinite(minutes) && minutes >= 1 ? minutes : DEFAULT_REFRESH_MINUTES
+      refreshMinutes: Number.isFinite(minutes) && minutes >= 1 ? minutes : DEFAULT_REFRESH_MINUTES,
+      streakOverride: ovDays !== null && ovDays >= 1 ? Math.floor(ovDays) : null
     };
   }
 
@@ -199,8 +202,9 @@
     els.score.textContent = scoreLabel(latest.score);
     els.score.classList.toggle("is-failed", latest.score === null);
 
-    const streak = calcStreak(results);
-    const showStreak = latest.score !== null && streak >= 2;
+    const override = getConfig().streakOverride;
+    const streak = override !== null ? override : calcStreak(results);
+    const showStreak = override !== null ? streak >= 2 : latest.score !== null && streak >= 2;
     els.streak.hidden = !showStreak;
     els.streak.textContent = showStreak ? I18N.t("wordle.streak", { n: streak }) : "";
 

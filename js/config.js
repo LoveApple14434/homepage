@@ -51,6 +51,14 @@ window.SITE_CONFIG = {
   wordle: {
     dataUrl: "https://loveapple.space/wordle-data/wordle.json",
     refreshMinutes: 5,
+
+    /* ---------- 连胜天数手动覆盖 ----------
+     * 做了但漏传 / 上传失败会让自动计算的连胜断链，这里可直接指定。
+     * null            = 按已同步记录自动计算（默认）
+     * { days: 12 }    = 强制显示 12 天，忽略记录断档
+     * 改完 push 即可，CI 约 40 秒生效。
+     * ------------------------------------ */
+    streakOverride: null,
   },
 
   /* ---------- 社交链接 ---------- */
